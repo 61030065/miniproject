@@ -1,0 +1,18 @@
+-- CREATE DATABASE
+
+CREATE DATABASE myNotes;
+
+-- CREATE TABLE
+
+CREATE TABLE Notes (
+  Note_ID INT NOT NULL,
+  Date DATETIME NOT NULL,
+  Note_Name VARCHAR(45) NOT NULL,
+  Detail VARCHAR(500) NOT NULL,
+  PRIMARY KEY (Note_ID)
+)Engine=InnoDB;
+
+-- INSERT
+
+INSERT INTO Notes VALUES('100','20/03/2021 1:00:00','Note1','ข้อความในโน๊ต1');
+INSERT INTO Notes VALUES('101','20/03/2021 2:00:00','Nott2','ข้อความในโน๊ต2');

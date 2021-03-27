@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Notes</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin: 0 -16px;
+        padding: 100px;
+    }
+    
+    .col-75 {
+        -ms-flex: 75%;
+        flex: 75%;
+    }
+    
+    .col-75 {
+        padding: 0 16px;
+    }
+    
+    .container {
+        background-color: #ffffff;
+        padding: 5px 20px 15px 20px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+    }
+</style>
+
+<body>
+    <div class="notes">
+        <div class="header">
+            <h1 class="title">
+                Note
+                <button class="button button-back" onclick="location.href='index.html'" title="Back">&#8249;</button>
+            </h1>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-75">
+                    <div class="container">
+                        <h3>เรื่อง</h3>
+                        <p id="name"></p>
+                        <h3>รายละเอียด</h3>
+                        <p id="detail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var selector = localStorage.getItem("selector");
+    show(selector);
+
+    function show(selector) {
+        console.log(selector);
+        var notes = JSON.parse(localStorage.getItem("notes"));
+        var res = selector.split(",");
+
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].noteDate == res[0]) {
+                for (var j = 0; j < notes[i].notes.length; j++) {
+                    if (j == res[1]) {
+                        document.getElementById("name").innerHTML = notes[i].notes[j].name;
+                        document.getElementById("detail").innerHTML = res[0] + "<br>" + notes[i].notes[j].detail;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+</html>

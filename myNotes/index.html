@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Notes</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <div class="notes">
+        <div class="header">
+            <h1 class="title">
+                My Notes
+                <a class="button button-new" href="new.html" title="New note"></a>
+            </h1>
+        </div>
+
+        <table>
+            <tbody id="notes-list">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    if (localStorage.getItem("notes") === null) {
+        localStorage.setItem("notes", JSON.stringify([]));
+        var http_request = new XMLHttpRequest();
+        http_request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var notes = JSON.parse(this.responseText);
+                localStorage.setItem("notes", JSON.stringify(notes));
+                console.log(notes);
+                show(notes);
+            }
+        };
+        http_request.open("GET", "notes.php", true);
+        http_request.send();
+    }
+
+    var notes = JSON.parse(localStorage.getItem("notes"));
+    show(notes);
+
+    function show(notes) {
+
+        var table = "";
+        for (i in notes) {
+            table += '<tr class="note-date">';
+            table += '<td>' + 'วันที่ ' + notes[i].noteDate + ' </td>';
+            table += '<td></td>';
+            table += '</tr>';
+            for (j in notes[i].notes) {
+                table += '<tr class="note-list">';
+                table += '<td onclick="show_detail(\'' + notes[i].noteDate + '\',\'' + j + '\')" title="Detail">';
+                table += notes[i].notes[j].name + `<br>` + notes[i].notes[j].detail;
+                table += '</td>';
+                table += '<td>';
+                table += `<button class="button button-edit" onclick="edit(\'` + notes[i].noteDate + `\',\'` + j + `\')" title="Edit note">&#8250;</button><br>`;
+                table += '</td>';
+                table += '</tr>';
+            }
+        }
+
+        document.getElementById("notes-list").innerHTML = table;
+    }
+
+    function show_detail(date, index) {
+        var selector = [date, index];
+        localStorage.setItem("selector", selector);
+        location.href = "detail.html";
+    }
+
+    function edit(date, index) {
+        var selector = [date, index];
+        localStorage.setItem("selector", selector);
+        location.href = "edit.html";
+    }
+</script>
+
+</html>
